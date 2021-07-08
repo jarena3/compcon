@@ -1,4 +1,5 @@
 import uuid from 'uuid/v4'
+import _ from 'lodash'
 import { Npc, EncounterSide, MissionStepType } from '@/class'
 import { store } from '@/store'
 import { getImagePath, ImageTag } from '@/io/ImageManagement'
@@ -61,7 +62,7 @@ class Encounter implements IMissionStep, ICloudSyncable {
     this._environment_details = ''
     this._cloud_map = ''
     this._local_map = ''
-    this._sitrep = store.getters.getItemCollection('Sitreps')[0]
+    this._sitrep = _.clone(store.getters.getItemCollection('Sitreps')[0])
     this._npcs = []
     this._reinforcements = []
     this.LastSync = new Date('1-1-1000').toJSON()
@@ -107,7 +108,7 @@ class Encounter implements IMissionStep, ICloudSyncable {
   }
 
   public set Sitrep(val: Sitrep) {
-    this._sitrep = val
+    this._sitrep = _.clone(val)
     this.save()
   }
 
